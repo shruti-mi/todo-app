@@ -10,14 +10,19 @@
 .header {
   border-style: ridge;
   border-width: 2px;
-  padding: 0px 80px;
+  width: 304px;
+  height: 30px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
   background-color: white;
 }
 
 .list-item {
   border-style: ridge;
   border-width: 2px;
-  width: 306px;
+  width: 304px;
   height: 20px;
   padding: 10px;
   background-color: white;
@@ -28,20 +33,22 @@
 .add-item {
   border-style: ridge;
   border-width: 2px;
-  padding: 5px 40px 5px 20px;
+  width: 304px;
+  height: 20px;
+  padding: 10px;
   background-color: white;
-  font-size: 15px;
-  font-weight: 400;  
 }
 
 .input {
-  padding: 7px;
+  padding: 4px;
 }
 
 .button {
-  padding: 7px;
+  padding: 4px;
 }
 
 .delete-item {
   float: right;
+  outline-style: none;
+  border-radius: 20px;
 }

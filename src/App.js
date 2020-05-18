@@ -6,7 +6,7 @@ import './App.css';
 function Header(props) {
     return (
       <div className= 'header'>
-        <h4>You have {props.numTodo} tasks todo</h4>
+        You have {props.numTodo} tasks todo
       </div>
     )
 }
@@ -69,7 +69,7 @@ class App extends React.Component {
    
     this.state = { 
       count: 0,
-      activeTasks: ["task2", "task3", "task1"],
+      activeTasks: [ "task1", "task2", "task3"],
       completedTasks: []
       };
   }
