@@ -3,21 +3,31 @@ import logo from './logo.svg';
 import './App.css';
 
 
-function Header(props) {
-    return (
-      <div className= 'header'>
-        You have {props.numTodo} tasks todo
-      </div>
-    )
-}
-
-
 function TodoList(props) {
   const todos = props.tasks.map((task, index) => {
-        return <Todo content={task} id= {index} onDelete={props.onDelete} />
+      if(props.active == 1)
+        return <Todo content={task} id= {index} active={1} onDelete={props.onDelete} onRemove={props.onRemove}/>
+      else
+        return <Todo content={task} id= {index} active={0} onRemove={props.onRemove}/>
   });
+
+var tasks_length = props.tasks.length;
+tasks_length = tasks_length.toString();
+
+
+//---------------------------CONDITIONAL RENDERING---------------------------
+
+if(props.active)
+  var str = "You have "+ tasks_length +" Incompleted todos";
+
+else
+  var str = "You have "+ tasks_length +" Completed todos";
+
   return  (
     <div className = 'list-wrapper'>
+      <div className= 'header'>
+        {str}
+      </div>
       {todos}
     </div>
   );
@@ -25,12 +35,27 @@ function TodoList(props) {
 
 
 function Todo(props) {
-  return (
-    <div className= 'list-item'>
-      {props.content} 
-      <button className= 'delete-item' onClick={() => {props.onDelete(props.id)}}> X </button>
-    </div>
-  );
+
+var button = <button className= 'delete-item' onClick={() => {props.onRemove(props.id, props.active)}}> Remove </button>
+
+  if(props.active == 1) {
+    return (
+      <div className= 'list-item'>
+        {props.content} 
+        <button className= 'delete-item' onClick={() => {props.onDelete(props.id)}}> Mark as done </button>
+        {button}
+      </div>
+    );
+  }
+
+  else {
+    return (
+      <div className= 'list-item'>
+        {props.content} 
+        {button}
+      </div>
+    );
+  }
 }
 
 
@@ -66,13 +91,15 @@ class App extends React.Component {
 
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
    
     this.state = { 
       count: 0,
       activeTasks: [ "task1", "task2", "task3"],
-      completedTasks: []
+      completedTasks: ["task4"]
       };
   }
+
 
   handleAdd(addTask) {
     if(!addTask.replace(/\s/g, '').length)return;
@@ -83,6 +110,7 @@ class App extends React.Component {
       activeTasks: active
     });
   };
+
 
   handleDelete(i) {
     var active = [...this.state.activeTasks];
@@ -99,12 +127,33 @@ class App extends React.Component {
   };
 
 
+  handleRemove(i, index) {
+    if(index==1) {
+      var active = [...this.state.activeTasks];
+      active.splice(i, 1);
+
+      this.setState({
+        activeTasks: active
+      });
+    }
+
+    else {
+      var completed = [...this.state.completedTasks];
+      completed.splice(i, 1);
+
+      this.setState({
+        completedTasks: completed
+      });
+    }
+  }
+
+
   render() {
   return (
     <div className="wrapper">
-      <Header numTodo = {this.state.activeTasks.length} />
-      <TodoList tasks={this.state.activeTasks} onDelete={this.handleDelete}/>
       <Addtodo onAdd={this.handleAdd}/>
+      <TodoList tasks={this.state.activeTasks} onDelete={this.handleDelete} onRemove={this.handleRemove} active={1}/>
+      <TodoList tasks={this.state.completedTasks} onRemove={this.handleRemove} active={0}/>
     </div>
   );
   }

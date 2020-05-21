@@ -14,7 +14,7 @@
   height: 30px;
   padding: 10px;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   background-color: white;
 }
@@ -51,5 +51,4 @@
 .delete-item {
   float: right;
   outline-style: none;
-  border-radius: 20px;
 }
